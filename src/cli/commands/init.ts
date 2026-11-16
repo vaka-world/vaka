@@ -1,10 +1,10 @@
 /**
- * `cognition init` — vendors Cognition's own skill guides (the source of
+ * `vaka init` — vendors this package's own skill guides (the source of
  * truth under `skills/`) into the current project, for people who installed
  * this as an npm package instead of a Claude Code / Codex plugin. Modeled on
- * Vaka's `vaka init` (apps/cli/src/commands/init.ts): same file-safety
- * helpers (refuse symlinks, create-if-missing, atomic merge), adapted to
- * Cognition's own skill set and to rewriting `${CLAUDE_PLUGIN_ROOT}`
+ * the original web CLI's `vaka init` (apps/cli/src/commands/init.ts): same
+ * file-safety helpers (refuse symlinks, create-if-missing, atomic merge),
+ * adapted to this skill set and to rewriting `${CLAUDE_PLUGIN_ROOT}`
  * references into direct CLI calls instead of a vendored plugin path.
  */
 
@@ -23,7 +23,7 @@ export interface InitResult {
 }
 
 export interface InitOptions {
-  /** Root of the installed Cognition package (where `skills/` lives). Defaults to this module's own package. */
+  /** Root of the installed Vaka package (where `skills/` lives). Defaults to this module's own package. */
   packageRoot?: string;
 }
 
@@ -31,7 +31,7 @@ const SKILL_NAMES = ["learn", "pause", "reset", "status"] as const;
 type SkillName = (typeof SKILL_NAMES)[number];
 
 function vendoredName(name: SkillName): string {
-  return `cognition-${name}`;
+  return `vaka-${name}`;
 }
 
 function isMissing(error: unknown): boolean {
@@ -62,8 +62,8 @@ async function inspectPath(path: string): Promise<"file" | "directory" | undefin
 }
 
 /**
- * `cognition init` always creates `.claude/skills/cognition-<name>`, so a bare
- * `.claude` directory whose only content is Cognition's own skills must not
+ * `vaka init` always creates `.claude/skills/vaka-<name>`, so a bare
+ * `.claude` directory whose only content is Vaka's own skills must not
  * itself be read back as "this project already uses Claude Code" on a later
  * run — that would start merging a SessionStart hook into settings.json for
  * projects that never otherwise touched Claude Code.
@@ -162,7 +162,7 @@ async function writeJsonAtomic(absolutePath: string, data: unknown): Promise<voi
 /** Throws instead of silently no-op'ing if the skill guides drift from what this rewrite expects. */
 function replaceOnce(text: string, search: string, replacement: string, label: string): string {
   if (!text.includes(search)) {
-    throw new Error(`cognition init: expected to find ${label} while vendoring a skill guide, but it was not there.`);
+    throw new Error(`vaka init: expected to find ${label} while vendoring a skill guide, but it was not there.`);
   }
   return text.replace(search, replacement);
 }
@@ -194,7 +194,7 @@ const RESET_CODEX_PATHS_OLD =
   "- **Paths:** `${CLAUDE_PLUGIN_ROOT}` isn't expanded here. Resolve `reset.js` as `../../dist/skills/reset/reset.js` relative to this file, and use its absolute path when invoking `node`. The Learn guide is `../learn/SKILL.md` relative to this file.";
 
 function rewriteCommandNames(text: string): string {
-  return text.split("/cognition:").join("/cognition-").split("$cognition:").join("$cognition-");
+  return text.split("/vaka:").join("/vaka-").split("$vaka:").join("$vaka-");
 }
 
 function rewriteSkillMdFrontmatterName(text: string, name: SkillName): string {

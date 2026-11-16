@@ -1,20 +1,29 @@
 {
-  "name": "@craiggazimbi/cognition",
+  "name": "@vaka.world/cli",
   "version": "0.1.1",
   "description": "Your mind is the architect. A Claude Code / Codex plugin that makes you reason through design, data flow, and failure modes before the agent writes a line of code.",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/therealcraiggazimbi/cognition.git"
+    "url": "https://github.com/vaka-world/vaka.git"
   },
-  "keywords": ["learning", "architecture", "engineering", "pair-programming"],
+  "keywords": [
+    "learning",
+    "architecture",
+    "engineering",
+    "pair-programming"
+  ],
   "engines": {
     "node": ">=22.6.0"
   },
   "bin": {
-    "cognition": "dist/cli/index.js"
+    "vaka": "dist/cli/index.js"
   },
-  "files": ["dist", "skills", "LICENSE"],
+  "files": [
+    "dist",
+    "skills",
+    "LICENSE"
+  ],
   "publishConfig": {
     "access": "public"
   },
@@ -25,10 +34,12 @@
     "prepublishOnly": "npm run build",
     "test": "tsx --test tests/**/*.test.ts",
     "test:dist": "npm run build && node --test dist-tests",
-    "typecheck": "tsc -p tsconfig.json --noEmit"
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "prepare": "husky"
   },
   "devDependencies": {
     "@types/node": "^22.10.1",
+    "husky": "^9.1.7",
     "tsx": "^4.19.2",
     "typescript": "^5.7.2"
   }

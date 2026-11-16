@@ -1,9 +1,9 @@
 {
-  "name": "cognition",
-  "interface": { "displayName": "Cognition" },
+  "name": "vaka",
+  "interface": { "displayName": "Vaka" },
   "plugins": [
     {
-      "name": "cognition",
+      "name": "vaka",
       "source": { "source": "local", "path": "./" },
       "policy": {
         "installation": "AVAILABLE",

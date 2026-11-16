@@ -1,5 +1,5 @@
 interface:
-  display_name: "Cognition Status"
+  display_name: "Vaka Status"
   short_description: "Show the current learning-mode status for this project"
 policy:
   allow_implicit_invocation: false

@@ -1,5 +1,5 @@
 {
-  "description": "Restore local Cognition learning context when a session starts or compacts.",
+  "description": "Restore local Vaka learning context when a session starts or compacts.",
   "hooks": {
     "SessionStart": [
       {

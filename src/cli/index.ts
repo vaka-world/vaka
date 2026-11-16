@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * The `cognition` CLI: the npm-install path alongside the Claude Code/Codex
+ * The `vaka` CLI: the npm-install path alongside the Claude Code/Codex
  * plugin install. `init` vendors the skill guides into a project (see
  * commands/init.ts); `pause`/`reset`/`status`/`hook session-start` are thin
  * wrappers around the same logic the plugin's own dist/ scripts run, so a
@@ -12,7 +12,7 @@
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { initializeProject } from "./commands/init";
-import { animateCognitionEntrance } from "./ui/banner";
+import { animateVakaEntrance } from "./ui/banner";
 import { checkForUpdates, formatUpdateNotice } from "./update-check";
 import { main as sessionStartMain } from "../hooks/session-start";
 import { pause } from "../skills/pause/pause";
@@ -53,11 +53,11 @@ function printHelp(): void {
       `${PACKAGE_NAME} v${VERSION} — Your mind is the architect.`,
       "",
       "Usage:",
-      "  cognition init                     Vendor Cognition's skills into the current project",
-      "  cognition pause --cwd <dir>         Pause learning mode for a project",
-      "  cognition reset --cwd <dir> [...]   Preview/confirm resetting a project's learning notes",
-      "  cognition status --cwd <dir>        Print a project's learning-mode status as JSON",
-      "  cognition --version                 Print the installed version",
+      "  vaka init                     Vendor Vaka's skills into the current project",
+      "  vaka pause --cwd <dir>         Pause learning mode for a project",
+      "  vaka reset --cwd <dir> [...]   Preview/confirm resetting a project's learning notes",
+      "  vaka status --cwd <dir>        Print a project's learning-mode status as JSON",
+      "  vaka --version                 Print the installed version",
     ].join("\n")
   );
 }
@@ -67,9 +67,9 @@ async function run(): Promise<"skip-update-check" | void> {
 
   switch (command) {
     case "init": {
-      await animateCognitionEntrance({ version: VERSION });
+      await animateVakaEntrance({ version: VERSION });
       console.log(`\n${DESCRIPTION}\n`);
-      console.log(`cognition init — vendoring skills into ${process.cwd()}\n`);
+      console.log(`vaka init — vendoring skills into ${process.cwd()}\n`);
       try {
         const result = await initializeProject(process.cwd());
         for (const file of result.created) console.log(`  created  ${file}`);
@@ -79,7 +79,7 @@ async function run(): Promise<"skip-update-check" | void> {
 
         console.log(
           result.integrations.length === 0
-            ? "\nNo CLAUDE.md/AGENTS.md detected yet — the skill guides are installed either way; run `/cognition-learn` (Claude Code) or `$cognition-learn` (Codex) once you're set up."
+            ? "\nNo CLAUDE.md/AGENTS.md detected yet — the skill guides are installed either way; run `/vaka-learn` (Claude Code) or `$vaka-learn` (Codex) once you're set up."
             : `\nDetected: ${result.integrations.join(", ")}`
         );
       } catch (error) {

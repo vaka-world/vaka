@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 "use strict";
 /**
- * The `cognition` CLI: the npm-install path alongside the Claude Code/Codex
+ * The `vaka` CLI: the npm-install path alongside the Claude Code/Codex
  * plugin install. `init` vendors the skill guides into a project (see
  * commands/init.ts); `pause`/`reset`/`status`/`hook session-start` are thin
  * wrappers around the same logic the plugin's own dist/ scripts run, so a
@@ -42,20 +42,20 @@ function printHelp() {
         `${PACKAGE_NAME} v${VERSION} — Your mind is the architect.`,
         "",
         "Usage:",
-        "  cognition init                     Vendor Cognition's skills into the current project",
-        "  cognition pause --cwd <dir>         Pause learning mode for a project",
-        "  cognition reset --cwd <dir> [...]   Preview/confirm resetting a project's learning notes",
-        "  cognition status --cwd <dir>        Print a project's learning-mode status as JSON",
-        "  cognition --version                 Print the installed version",
+        "  vaka init                     Vendor Vaka's skills into the current project",
+        "  vaka pause --cwd <dir>         Pause learning mode for a project",
+        "  vaka reset --cwd <dir> [...]   Preview/confirm resetting a project's learning notes",
+        "  vaka status --cwd <dir>        Print a project's learning-mode status as JSON",
+        "  vaka --version                 Print the installed version",
     ].join("\n"));
 }
 async function run() {
     const [, , command, ...rest] = process.argv;
     switch (command) {
         case "init": {
-            await (0, banner_1.animateCognitionEntrance)({ version: VERSION });
+            await (0, banner_1.animateVakaEntrance)({ version: VERSION });
             console.log(`\n${DESCRIPTION}\n`);
-            console.log(`cognition init — vendoring skills into ${process.cwd()}\n`);
+            console.log(`vaka init — vendoring skills into ${process.cwd()}\n`);
             try {
                 const result = await (0, init_1.initializeProject)(process.cwd());
                 for (const file of result.created)
@@ -67,7 +67,7 @@ async function run() {
                 else if (result.hook === "already-present")
                     console.log("  kept     SessionStart hook (already present)");
                 console.log(result.integrations.length === 0
-                    ? "\nNo CLAUDE.md/AGENTS.md detected yet — the skill guides are installed either way; run `/cognition-learn` (Claude Code) or `$cognition-learn` (Codex) once you're set up."
+                    ? "\nNo CLAUDE.md/AGENTS.md detected yet — the skill guides are installed either way; run `/vaka-learn` (Claude Code) or `$vaka-learn` (Codex) once you're set up."
                     : `\nDetected: ${result.integrations.join(", ")}`);
             }
             catch (error) {

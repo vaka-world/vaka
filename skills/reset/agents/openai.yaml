@@ -1,5 +1,5 @@
 interface:
-  display_name: "Cognition Reset"
+  display_name: "Vaka Reset"
   short_description: "Back up learning notes and restart onboarding"
 policy:
   allow_implicit_invocation: false

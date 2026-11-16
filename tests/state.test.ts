@@ -6,7 +6,7 @@ import path from "node:path";
 import { gitRoot, profileIsActive, stateDirectory } from "../src/lib/state";
 
 function tempProject(): { root: string; project: string } {
-  const root = mkdtempSync(path.join(tmpdir(), "cognition-state-"));
+  const root = mkdtempSync(path.join(tmpdir(), "vaka-state-"));
   const project = path.join(root, "project with spaces");
   mkdirSync(project);
   mkdirSync(path.join(project, ".git"));
@@ -14,7 +14,7 @@ function tempProject(): { root: string; project: string } {
 }
 
 function withState(project: string, mode = "active"): string {
-  const state = path.join(project, ".cognition");
+  const state = path.join(project, ".vaka");
   mkdirSync(state);
   writeFileSync(path.join(state, "profile.md"), `Learning mode: ${mode}\n`);
   return state;
@@ -45,7 +45,7 @@ test("stateDirectory finds notes at the project root from a nested directory", (
 });
 
 test("stateDirectory without Git only checks the exact cwd, never a parent", () => {
-  const root = mkdtempSync(path.join(tmpdir(), "cognition-state-"));
+  const root = mkdtempSync(path.join(tmpdir(), "vaka-state-"));
   try {
     const parent = path.join(root, "documents");
     mkdirSync(parent);
@@ -86,17 +86,17 @@ test("stateDirectory stops at a symlinked state directory instead of falling bac
     const outside = path.join(root, "outside");
     mkdirSync(outside);
     const real = withState(outside);
-    symlinkSync(real, path.join(project, ".cognition"), "dir");
+    symlinkSync(real, path.join(project, ".vaka"), "dir");
     assert.equal(stateDirectory(project), null);
   } finally {
     rmSync(root, { recursive: true, force: true });
   }
 });
 
-test("stateDirectory rejects a non-directory .cognition path", () => {
+test("stateDirectory rejects a non-directory .vaka path", () => {
   const { root, project } = tempProject();
   try {
-    writeFileSync(path.join(project, ".cognition"), "not a directory");
+    writeFileSync(path.join(project, ".vaka"), "not a directory");
     assert.equal(stateDirectory(project), null);
   } finally {
     rmSync(root, { recursive: true, force: true });
@@ -104,7 +104,7 @@ test("stateDirectory rejects a non-directory .cognition path", () => {
 });
 
 test("profileIsActive requires real content and is case/whitespace tolerant for paused", () => {
-  const root = mkdtempSync(path.join(tmpdir(), "cognition-profile-"));
+  const root = mkdtempSync(path.join(tmpdir(), "vaka-profile-"));
   try {
     const active = path.join(root, "active.md");
     writeFileSync(active, "Learning mode: active\nOnboarding: complete\n");
@@ -127,7 +127,7 @@ test("profileIsActive requires real content and is case/whitespace tolerant for 
 });
 
 test("profileIsActive rejects invalid UTF-8 and symlinked profiles", () => {
-  const root = mkdtempSync(path.join(tmpdir(), "cognition-profile-"));
+  const root = mkdtempSync(path.join(tmpdir(), "vaka-profile-"));
   try {
     const invalid = path.join(root, "invalid.md");
     writeFileSync(invalid, Buffer.from([0xff, 0xfe]));

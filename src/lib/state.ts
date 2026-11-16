@@ -7,7 +7,7 @@
 import { existsSync, lstatSync, readFileSync } from "node:fs";
 import path from "node:path";
 
-export const STATE_DIR_NAME = ".cognition";
+export const STATE_DIR_NAME = ".vaka";
 
 /** Find the nearest repository or worktree root (a `.git` directory or file). */
 export function gitRoot(cwd: string): string | null {
@@ -22,7 +22,7 @@ export function gitRoot(cwd: string): string | null {
 }
 
 /**
- * Find the nearest `.cognition` notes directory without crossing a Git
+ * Find the nearest `.vaka` notes directory without crossing a Git
  * project boundary. Without Git, only `cwd` itself is checked: searching
  * parents could otherwise adopt notes from an unrelated ancestor folder.
  *

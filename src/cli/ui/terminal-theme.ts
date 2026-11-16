@@ -1,7 +1,7 @@
 export type TerminalTheme = "dark" | "light";
 
 interface ThemeEnv {
-  COGNITION_THEME?: string;
+  VAKA_THEME?: string;
   COLORFGBG?: string;
 }
 
@@ -14,7 +14,7 @@ interface ThemeEnv {
  * with an explicit override for everyone else, including for a reliable demo.
  */
 export function detectTerminalTheme(env: ThemeEnv = process.env): TerminalTheme {
-  const override = env.COGNITION_THEME?.toLowerCase();
+  const override = env.VAKA_THEME?.toLowerCase();
   if (override === "light" || override === "dark") {
     return override;
   }

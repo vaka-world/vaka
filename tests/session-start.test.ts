@@ -13,7 +13,7 @@ import path from "node:path";
 import { PLUGIN_ROOT, restore } from "../src/hooks/session-start";
 
 function tempProject(): { root: string; project: string } {
-  const root = mkdtempSync(path.join(tmpdir(), "cognition-hook-"));
+  const root = mkdtempSync(path.join(tmpdir(), "vaka-hook-"));
   const project = path.join(root, "project with spaces");
   mkdirSync(project);
   mkdirSync(path.join(project, ".git"));
@@ -21,7 +21,7 @@ function tempProject(): { root: string; project: string } {
 }
 
 function withState(project: string, mode = "active"): string {
-  const state = path.join(project, ".cognition");
+  const state = path.join(project, ".vaka");
   mkdirSync(state);
   writeFileSync(
     path.join(state, "profile.md"),
@@ -58,7 +58,7 @@ test("active notes restore with instructions pointing at the Learn guide, not ra
       assert.ok(output, `expected output for source=${source}`);
       const context = output!.hookSpecificOutput.additionalContext;
       assert.equal(output!.hookSpecificOutput.hookEventName, "SessionStart");
-      assert.match(context, /Cognition's learning mode on/);
+      assert.match(context, /Vaka's learning mode on/);
       assert.ok(context.includes(path.join(PLUGIN_ROOT, "skills", "learn", "SKILL.md")));
       assert.ok(context.includes(state));
       assert.ok(context.includes("search all of progress.md"));
@@ -84,7 +84,7 @@ test("restores from a nested working directory inside the project", () => {
 });
 
 test("a project without Git still restores from its own notes", () => {
-  const root = mkdtempSync(path.join(tmpdir(), "cognition-hook-"));
+  const root = mkdtempSync(path.join(tmpdir(), "vaka-hook-"));
   try {
     const project = path.join(root, "fresh-no-git");
     mkdirSync(project);
@@ -96,7 +96,7 @@ test("a project without Git still restores from its own notes", () => {
 });
 
 test("without Git, a plain subfolder never inherits a shared parent's notes", () => {
-  const root = mkdtempSync(path.join(tmpdir(), "cognition-hook-"));
+  const root = mkdtempSync(path.join(tmpdir(), "vaka-hook-"));
   try {
     const parent = path.join(root, "documents");
     const project = path.join(parent, "throwaway", "plain-project");

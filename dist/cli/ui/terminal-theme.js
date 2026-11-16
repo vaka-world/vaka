@@ -11,7 +11,7 @@ exports.supportsColor = supportsColor;
  * with an explicit override for everyone else, including for a reliable demo.
  */
 function detectTerminalTheme(env = process.env) {
-    const override = env.COGNITION_THEME?.toLowerCase();
+    const override = env.VAKA_THEME?.toLowerCase();
     if (override === "light" || override === "dark") {
         return override;
     }

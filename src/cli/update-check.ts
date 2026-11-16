@@ -35,7 +35,7 @@ interface CheckForUpdatesOptions {
 }
 
 function defaultCachePath(): string {
-  return join(homedir(), ".cognition", "update-check.json");
+  return join(homedir(), ".vaka", "update-check.json");
 }
 
 function readCache(cachePath: string): UpdateCache | undefined {

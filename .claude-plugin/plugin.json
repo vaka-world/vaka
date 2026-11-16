@@ -1,8 +1,8 @@
 {
-  "name": "cognition",
+  "name": "vaka",
   "version": "0.1.0",
   "description": "Your mind is the architect. Work through design, data flow, and failure modes with the agent before any code gets written.",
-  "icon": "./assets/cognition-logo.jpeg",
+  "icon": "./assets/vaka.png",
   "license": "MIT",
   "keywords": ["learning", "architecture", "engineering", "pair-programming"]
 }

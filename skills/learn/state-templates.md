@@ -1,6 +1,6 @@
 # The three note files, and what goes in them
 
-Only ever create these three files, inside whichever `.cognition/` directory SKILL.md's lookup resolved to for this project. Swap every bracketed placeholder for something you actually verified, or write "Not specified" if you didn't. Keep the two bare status lines near the top of `profile.md` exactly as shown and unformatted — the restoration hook string-matches them. If a file already exists, never overwrite it with one of these blank templates; templates are only for notes that don't exist yet.
+Only ever create these three files, inside whichever `.vaka/` directory SKILL.md's lookup resolved to for this project. Swap every bracketed placeholder for something you actually verified, or write "Not specified" if you didn't. Keep the two bare status lines near the top of `profile.md` exactly as shown and unformatted — the restoration hook string-matches them. If a file already exists, never overwrite it with one of these blank templates; templates are only for notes that don't exist yet.
 
 ## profile.md
 

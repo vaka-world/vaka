@@ -17,7 +17,7 @@ import path from "node:path";
 import { reset } from "../src/skills/reset/reset";
 
 function tempProject(): { root: string; project: string } {
-  const root = mkdtempSync(path.join(tmpdir(), "cognition-reset-"));
+  const root = mkdtempSync(path.join(tmpdir(), "vaka-reset-"));
   const project = path.join(root, "project with spaces");
   mkdirSync(project);
   mkdirSync(path.join(project, ".git"));
@@ -31,7 +31,7 @@ const ORIGINALS: Record<string, Buffer> = {
 };
 
 function withNotes(project: string): string {
-  const state = path.join(project, ".cognition");
+  const state = path.join(project, ".vaka");
   mkdirSync(state);
   for (const [name, data] of Object.entries(ORIGINALS)) {
     writeFileSync(path.join(state, name), data);
@@ -119,7 +119,7 @@ test("no notes and an empty state directory never create files", () => {
   try {
     assert.equal(reset(project).status, "no_notes");
     assert.deepEqual(readdirSync(project), [".git"]);
-    const state = path.join(project, ".cognition");
+    const state = path.join(project, ".vaka");
     mkdirSync(state);
     assert.equal(reset(project).status, "no_notes");
     assert.deepEqual(readdirSync(state), []);
@@ -194,7 +194,7 @@ test("a symlinked state directory is never followed or reset", () => {
     const outside = path.join(root, "outside");
     mkdirSync(outside);
     const target = withNotes(outside);
-    symlinkSync(target, path.join(project, ".cognition"), "dir");
+    symlinkSync(target, path.join(project, ".vaka"), "dir");
 
     assert.equal(reset(project).status, "no_notes");
     assertOriginals(target);

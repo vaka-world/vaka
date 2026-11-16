@@ -63,7 +63,7 @@ test("setLearningMode inserts a line when the profile has none yet", () => {
 });
 
 test("readNoteFile rejects symlinks, directories, and missing paths", () => {
-  const root = mkdtempSync(path.join(tmpdir(), "cognition-notefile-"));
+  const root = mkdtempSync(path.join(tmpdir(), "vaka-notefile-"));
   try {
     const real = path.join(root, "real.md");
     writeFileSync(real, "Learning mode: active\n");

@@ -6,7 +6,7 @@ import path from "node:path";
 import { pause } from "../src/skills/pause/pause";
 
 function tempProject(): { root: string; project: string } {
-  const root = mkdtempSync(path.join(tmpdir(), "cognition-pause-"));
+  const root = mkdtempSync(path.join(tmpdir(), "vaka-pause-"));
   const project = path.join(root, "project with spaces");
   mkdirSync(project);
   mkdirSync(path.join(project, ".git"));
@@ -23,10 +23,10 @@ test("a project with no notes reports no_notes and creates nothing", () => {
   }
 });
 
-test("a .cognition/ directory with no profile.md yet reports no_notes", () => {
+test("a .vaka/ directory with no profile.md yet reports no_notes", () => {
   const { root, project } = tempProject();
   try {
-    mkdirSync(path.join(project, ".cognition"));
+    mkdirSync(path.join(project, ".vaka"));
     assert.deepEqual(pause(project), { status: "no_notes", cwd: project });
   } finally {
     rmSync(root, { recursive: true, force: true });
@@ -36,7 +36,7 @@ test("a .cognition/ directory with no profile.md yet reports no_notes", () => {
 test("pausing sets Learning mode: paused and preserves everything else", () => {
   const { root, project } = tempProject();
   try {
-    const state = path.join(project, ".cognition");
+    const state = path.join(project, ".vaka");
     mkdirSync(state);
     writeFileSync(
       path.join(state, "profile.md"),
@@ -58,7 +58,7 @@ test("pausing sets Learning mode: paused and preserves everything else", () => {
 test("pausing twice is idempotent", () => {
   const { root, project } = tempProject();
   try {
-    const state = path.join(project, ".cognition");
+    const state = path.join(project, ".vaka");
     mkdirSync(state);
     writeFileSync(path.join(state, "profile.md"), "Learning mode: active\nOnboarding: complete\n");
     pause(project);
@@ -74,7 +74,7 @@ test("pausing twice is idempotent", () => {
 test("a profile with no explicit mode line gets one inserted", () => {
   const { root, project } = tempProject();
   try {
-    const state = path.join(project, ".cognition");
+    const state = path.join(project, ".vaka");
     mkdirSync(state);
     writeFileSync(path.join(state, "profile.md"), "# Learner Profile\nExperience: Beginner\n");
     pause(project);
@@ -89,7 +89,7 @@ test("a profile with no explicit mode line gets one inserted", () => {
 test("a symlinked profile is never written through", () => {
   const { root, project } = tempProject();
   try {
-    const state = path.join(project, ".cognition");
+    const state = path.join(project, ".vaka");
     mkdirSync(state);
     const outside = path.join(root, "outside.md");
     writeFileSync(outside, "Learning mode: active\nPRIVATE\n");
@@ -104,7 +104,7 @@ test("a symlinked profile is never written through", () => {
 
 test("rejects a relative or nonexistent cwd", () => {
   assert.throws(() => pause("relative/path"), /absolute/);
-  const root = mkdtempSync(path.join(tmpdir(), "cognition-pause-"));
+  const root = mkdtempSync(path.join(tmpdir(), "vaka-pause-"));
   try {
     assert.throws(() => pause(path.join(root, "does-not-exist")));
   } finally {

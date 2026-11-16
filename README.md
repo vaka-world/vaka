@@ -1,70 +1,86 @@
-<img src="assets/cognition-logo.jpeg" alt="Cognition — your mind is the architect" width="420" height="420">
+<img src="assets/vaka.png" alt="Vaka: your mind is the architect" width="420" height="420">
 
-# Cognition
+# Vaka
 
-**Your mind is the architect.** Cognition is a plugin for **Claude Code** and **Codex** that enforces a reason-first workflow: the agent will not sketch a data model, pick a storage strategy, or scaffold an architecture until you've proposed one yourself.
+![Node.js](https://img.shields.io/badge/node-%3E%3D22.6-2E478C?style=flat-square&logo=node.js&logoColor=white)
+![npm](https://img.shields.io/badge/npm-%40vaka.world%2Fcli-2E478C?style=flat-square&logo=npm&logoColor=white)
+![License: MIT](https://img.shields.io/badge/license-MIT-2E478C?style=flat-square)
 
-It pushes back on weak spots, explains unfamiliar concepts, and waits for explicit confirmation before writing code. After implementing, it reports what it built and why, so you can verify the result against your own design instead of trusting the diff blindly.
+**Your mind is the architect.** Vaka is a plugin for **Claude Code** and **Codex** that enforces a reason-first workflow: the agent will not sketch a data model, choose a storage strategy, or scaffold an architecture until you have proposed one yourself.
+
+It challenges weak spots, explains unfamiliar concepts, and waits for explicit confirmation before writing code. After implementing, it reports what it built and why, so you can verify the result against your own design rather than trusting the diff blindly.
 
 Built for anyone who wants to stay in control of the thinking, not just the output: someone learning to program, a developer picking up an unfamiliar stack, or an experienced engineer who wants to keep "vibe coding" from replacing their own judgment.
 
 ## Table of Contents
 
 - [Install](#install)
-  - [npm (recommended)](#npm-recommended)
-  - [As a Claude Code / Codex plugin](#as-a-claude-code--codex-plugin)
+  - [Global install (recommended)](#global-install-recommended)
+  - [Run directly with npx](#run-directly-with-npx)
+  - [Native Claude Code / Codex plugin](#native-claude-code--codex-plugin)
 - [Commands](#commands)
   - [Session commands](#session-commands)
   - [Checkpoint responses](#checkpoint-responses)
   - [Spoken controls](#spoken-controls)
-  - [Scripts](#scripts)
 - [How a session runs](#how-a-session-runs)
 - [Tuning it to you](#tuning-it-to-you)
-- [Sharing with a team](#sharing-with-a-team)
 - [Development](#development)
 - [License](#license)
 
 ## Install
 
-**Requirements:** [Node.js](https://nodejs.org/) 22.6+, and a current install of [Claude Code](https://code.claude.com/docs/en/setup) or [Codex](https://developers.openai.com/codex).
+**Prerequisites:** [Node.js](https://nodejs.org/) 22.6 or later, and an active installation of [Claude Code](https://code.claude.com/docs/en/setup) or [Codex](https://developers.openai.com/codex).
 
-### npm (recommended)
+### Global install (recommended)
 
-Run this inside the project you want help with:
+Install the CLI globally so the `vaka` command is available across all your repositories:
 
 ```sh
-npx @craiggazimbi/cognition init
+npm install -g @vaka.world/cli
 ```
 
-This vendors the skill guides straight into the project:
+Navigate to your project and initialise Vaka:
 
-- `.claude/skills/cognition-*/` for Claude Code
-- `.agents/skills/cognition-*/` for Codex and other AGENTS.md-reading tools
-- A `SessionStart` hook merged into `.claude/settings.json`, if Claude Code is detected (a `CLAUDE.md` or an existing `.claude/`)
+```sh
+cd your-project
+vaka init
+```
 
-It's safe to run more than once — existing files are left alone and reported as kept.
+### Run directly with npx
 
-Then start a session:
+If you prefer not to install anything globally, run the initialiser directly inside your project:
+
+```sh
+npx @vaka.world/cli init
+```
+
+Both `vaka init` and `npx @vaka.world/cli init` write the skill guides straight into your project:
+
+- `.claude/skills/vaka-*/` for Claude Code
+- `.agents/skills/vaka-*/` for Codex and other `AGENTS.md`-reading tools
+- A `SessionStart` hook merged into `.claude/settings.json`, if Claude Code is detected (a `CLAUDE.md` file or an existing `.claude/` directory)
+
+It is safe to run more than once. Existing files are left untouched and reported as kept.
+
+Once initialised, start a session inside Claude Code or Codex:
 
 ```text
-/cognition-learn
+/vaka-learn
 ```
 
-(Codex: `$cognition-learn`.) Onboarding asks one question at a time — arrow keys and Enter to answer, or select **Use defaults** to skip to building. A new project and an unfamiliar existing codebase are both supported; for the latter, the agent reads the code first and summarizes what it found before asking anything.
+(In Codex, run `$vaka-learn`.) Onboarding asks one question at a time: use the arrow keys and Enter to answer, or select **Use defaults** to skip straight to building. Both new projects and unfamiliar existing codebases are supported; for the latter, the agent reads the code first and summarises what it found before asking anything.
 
 The CLI checks npm once a day for a newer version (cached locally, non-blocking) and prints a notice when an update is available.
 
-### As a Claude Code / Codex plugin
+### Native Claude Code / Codex plugin
 
-If you'd rather install through the native plugin system instead of npm:
+If you prefer to install through the native plugin system rather than npm:
 
 ```sh
-claude --plugin-dir /absolute/path/to/cognition
+claude --plugin-dir /absolute/path/to/vaka
 ```
 
-or register it as a marketplace source with `/plugin marketplace add`, then `/plugin install cognition@cognition`. For Codex, add the directory as a local plugin source using Codex's own marketplace commands.
-
-Commands are namespaced here instead of hyphenated: `/cognition:learn` (Codex: `$cognition:learn`). Behavior is otherwise identical to the npm install, and both tools read and write the same `.cognition/` folder in the project, so switching between them doesn't lose anything.
+Commands are namespaced here instead of hyphenated (`/vaka:learn` in Claude Code, or `$vaka:learn` in Codex). Behaviour is otherwise identical to the npm installation, and both tools read and write the same `.vaka/` folder in the project, so switching between them preserves your state.
 
 Wherever this guide shows a `/` command, use `$` in Codex.
 
@@ -72,30 +88,30 @@ Wherever this guide shows a `/` command, use `$` in Codex.
 
 ### Session commands
 
-Run inside the project being worked on. There are four commands; everything else in this guide is either a picker option or plain language the agent interprets. Shown here in the npm-install form — see [As a Claude Code / Codex plugin](#as-a-claude-code--codex-plugin) for the namespaced form.
+Run inside the project being worked on. Shown here in the npm-install form (see [Native Claude Code / Codex plugin](#native-claude-code--codex-plugin) for the namespaced form).
 
-| Command | What it's for |
+| Command | What it does |
 | --- | --- |
-| `/cognition-learn` | Starts learning mode on a new project, or resumes it from existing `.cognition/` notes. Run once per session at the start, and again if the agent appears to have drifted out of learning mode (for example, after a long `/compact`). |
-| `/cognition-status` | A read-only check: current learning mode, onboarding state, saved preferences, and any pending decision — without running Learn's full resume flow. Writes nothing. |
-| `/cognition-pause` | Pauses learning mode immediately, equivalent to saying "pause learning." No confirmation step; fully reversed by running `/cognition-learn` again. Only the `Learning mode:` line changes. |
-| `/cognition-reset` | Shows what's currently saved for the project, then — after explicit confirmation — backs up the current profile, progress, and project map, and restarts onboarding from scratch. Does not touch project code. |
+| `/vaka-learn` | Starts learning mode on a new project, or resumes it from existing `.vaka/` notes. Run once per session at the start, and again if the agent drifts out of learning mode (for example, after a long `/compact`). |
+| `/vaka-status` | A read-only check: displays current learning mode, onboarding state, saved preferences, and any pending decision without running Learn's full resume flow. Writes nothing. |
+| `/vaka-pause` | Pauses learning mode immediately, equivalent to saying "pause learning". No confirmation step; fully reversed by running `/vaka-learn` again. Only the `Learning mode:` line changes. |
+| `/vaka-reset` | Displays what is currently saved for the project, then (after explicit confirmation) backs up the current profile, progress, and project map, and restarts onboarding from scratch. Does not touch project code. |
 
 ### Checkpoint responses
 
-Not typed commands — these are the options the agent presents at a checkpoint or reset. Selecting one, via the native picker or by name, advances the flow.
+Options presented by the agent at a checkpoint or reset. Selecting one, via the native picker or by name, advances the flow.
 
 | Response | Appears at | Effect |
 | --- | --- | --- |
 | **Confirm and continue** | Design checkpoint | Locks in the proposed design and moves to the next open question. Still writes no code. |
-| **Implement this step** | Implementation checkpoint | Authorizes the agent to write the code just described. Also counts as confirming the design, if not already confirmed. |
-| **Discuss** | Either checkpoint | Raises questions or objections before committing — the agent waits for a reply instead of proceeding. |
-| **Cancel** | `/cognition-reset` confirmation | Aborts the reset. Nothing changes, including the notes. |
-| **Reset learning** | `/cognition-reset` confirmation | Confirms the reset: originals are backed up, then onboarding restarts. |
+| **Implement this step** | Implementation checkpoint | Authorises the agent to write the code just described. Also counts as confirming the design, if not already confirmed. |
+| **Discuss** | Either checkpoint | Raises questions or objections before committing: the agent waits for a reply instead of proceeding. |
+| **Cancel** | `/vaka-reset` confirmation | Aborts the reset. Nothing changes, including the notes. |
+| **Reset learning** | `/vaka-reset` confirmation | Confirms the reset: originals are backed up, then onboarding restarts. |
 
 ### Spoken controls
 
-Plain language, said at any point in the conversation — no special syntax required. These tune how learning mode behaves without turning it off.
+Plain language, spoken at any point in the conversation without special syntax.
 
 | Say this | To get |
 | --- | --- |
@@ -103,73 +119,58 @@ Plain language, said at any point in the conversation — no special syntax requ
 | "Use multiple-choice questions." | Multiple-choice instead of open-ended reasoning questions. |
 | "Focus on backend architecture." (or any area) | Narrows what the agent brings checkpoints to. |
 | "Just implement this one." | Skips the checkpoint for one specific, trivial change. |
-| "I'm stuck" / "skip" | Trades a reasoning question for an explanation or options, for that one step. |
-| "Pause learning." | Same effect as `/cognition-pause` — suspends the whole loop — as plain language instead of a command. |
-
-Resume a paused session the same way a session starts: `/cognition-learn`.
-
-### Scripts
-
-The agent invokes these through the CLI; running them directly isn't normally necessary. Documented here for completeness and for debugging.
-
-| Command | What it takes |
-| --- | --- |
-| `npx @craiggazimbi/cognition status --cwd <path>` | Read-only. Prints the parsed profile fields and any pending decision as JSON. |
-| `npx @craiggazimbi/cognition pause --cwd <path>` | Rewrites `Learning mode:` to `paused` in `profile.md`. |
-| `npx @craiggazimbi/cognition reset --cwd <path>` | A read-only preview; add `--confirm <token>` (from that preview's output) to execute the reset. |
-| `npx @craiggazimbi/cognition hook session-start` | Reads a `SessionStart` event from stdin and prints restoration instructions, or nothing. Used by the `SessionStart` hook automatically. |
-
-`<path>` must be an absolute path to the project directory.
+| "I'm stuck" / "skip" | Trades a reasoning question for an explanation or options, for that single step. |
+| "Pause learning." | Same effect as `/vaka-pause` using plain language instead of a command. |
 
 ## How a session runs
 
-Example: building a task tracker where one task can block another — "Deploy" can't start until "Write tests" is done.
+Example: building a Stripe payment webhook that credits a user's wallet balance when an invoice is paid.
 
 **You:**
 
 ```text
-Tasks can depend on other tasks. A task shouldn't be startable until everything it depends on is finished.
+Add a webhook endpoint for payment_intent.succeeded so we credit the user's wallet when they pay.
 ```
 
 **Agent:**
 
 ```text
-✦ Build checkpoint: Finished-but-reopened dependencies
+✦ Build checkpoint: Duplicate deliveries and concurrent retries
 
-Say "Deploy" depends on "Write tests," and "Write tests" is marked done.
-Someone later reopens "Write tests" because they found a bug.
+Payment providers frequently deliver the same webhook twice, or retry while
+your server is still processing the first request.
 
-Should "Deploy" still be allowed to run, or does reopening a dependency
-block anything that was waiting on it?
+If two identical events arrive within 50 milliseconds of each other, what
+stops your endpoint from crediting the user's wallet twice?
 ```
 
 **You:**
 
 ```text
-Reopening should re-block anything downstream. I don't want someone shipping on top of a dependency that's no longer actually finished.
+We should store the Stripe event ID in a database table with a unique constraint, and wrap the credit mutation and event insert in a single database transaction.
 ```
 
 **Agent:**
 
-```text
-That means a task's "can I start" status isn't fixed once dependencies are
-met — it has to be re-derived whenever a dependency's status changes.
+```
+That guarantees atomic idempotency: the second concurrent request hits the
+unique constraint, rolls back cleanly, and still returns 200 OK so Stripe
+stops retrying.
 
-✦ Design checkpoint: Representing dependencies
+✦ Design checkpoint: Idempotent ledger mutation
 
-Proposed: a dependencies table storing (task_id, depends_on_task_id) pairs,
-with no status duplicated onto the dependent task. A task is startable only
-if every row where it's the task_id points at a task marked done. Reopening
-a task doesn't need to touch anything downstream — the startable check just
-re-reads the live status each time it's asked.
+Proposed: a `processed_events` table keyed by `event_id` (unique index),
+written inside the same ACID transaction as the `wallet_ledger` credit
+entry. If `event_id` already exists, the handler exits early and returns
+HTTP 200 without modifying the balance.
 
-This avoids a cached "ready" flag going stale. We still need to decide what
-happens to a dependency pointing at a task that gets deleted.
+One open edge case: if the user's wallet record does not exist yet on their
+first payment, should the webhook create it lazily or fail loudly?
 
 ❯ 1. Confirm and continue
      This approach makes sense to me; move to the next piece.
   2. Discuss
-     Ask questions or clarify anything that doesn't make sense before deciding.
+     Ask questions or clarify anything that does not make sense before deciding.
 ```
 
 **You:**
@@ -178,22 +179,22 @@ happens to a dependency pointing at a task that gets deleted.
 Confirm and continue.
 ```
 
-*After working through task deletion the same way...*
+*After settling wallet initialisation the same way...*
 
 **Agent:**
 
 ```text
-✦ Implementation checkpoint: Dependency tracking and startability
+✦ Implementation checkpoint: Idempotent webhook handler
 
-I'll add the dependencies table, the startable check that re-derives status
-from live dependency rows, and cascade the agreed delete behavior. Then I'll
-test: a task blocked by an unfinished dependency, one unblocked after that
-dependency completes, and one that re-blocks after its dependency reopens.
+I will add the `processed_events` schema and unique index, wrap the wallet
+credit in a single transaction, and return 200 OK on duplicate event IDs.
+Then I will run tests covering: a valid first payment, a sequential replay
+of the same event ID, and two simultaneous requests racing on the same ID.
 
 ❯ 1. Implement this step
      This approach makes sense to me; write the code for this step.
   2. Discuss
-     Ask questions or clarify anything that doesn't make sense before deciding.
+     Ask questions or clarify anything that does not make sense before deciding.
 ```
 
 **You:**
@@ -205,29 +206,24 @@ Implement this step.
 **Agent:**
 
 ```text
-✦ Implementation report: Dependency tracking and startability
+✦ Implementation report: Idempotent webhook handler
 
-- Added the dependencies table and the query that derives startable status
-  from current dependency state, instead of a stored flag.
-- Wired task reopening to simply stop short-circuiting that query — no
-  write-time cascade needed, since status is always re-derived on read.
-- Added and ran three tests: blocked-by-open-dependency, unblocked-on-
-  completion, re-blocked-on-reopen. All three passed.
+- Added `processed_events` table with a unique constraint on `event_id`.
+- Wrapped the event insert and wallet credit inside one database transaction;
+  duplicate key violations catch cleanly and return HTTP 200.
+- Added and ran three tests: initial credit, sequential replay, and
+  concurrent race condition. All three passed.
 ```
 
-You don't need to already know the answer going in. For an unfamiliar concept, the agent explains it and hands back a smaller, concrete question instead of the full design. You remain in control — answer in plain language, or say "skip" or ask for options when you want them.
-
-What you describe sets the requirements, not the design. A Build checkpoint is where the mechanism gets worked out; stating a feature is not the same as choosing how it's built.
+You do not need to know the answer going in. For an unfamiliar concept, the agent explains it and hands back a smaller, concrete question instead of the full design. You remain in control: answer in plain language, or say "skip" or ask for options whenever you want them.
 
 | Checkpoint | What happens |
 | --- | --- |
-| **Build** | The mechanism gets worked out with the agent's feedback — no code, no architecture yet. |
-| **Design** | The agent lays out the proposed structure and tradeoffs. **Confirm and continue** locks it in and moves to the next open question; still no code. |
-| **Implementation** | The agent names the exact change it's about to make. **Implement this step** is what authorizes it to write code. |
+| **Build** | The mechanism gets worked out with the agent's feedback: no code, no architecture yet. |
+| **Design** | The agent lays out the proposed structure and trade-offs. **Confirm and continue** locks it in and moves to the next open question; still no code. |
+| **Implementation** | The agent names the exact change it is about to make. **Implement this step** authorises it to write code. |
 
-These don't have to happen as three separate stops — several Build checkpoints can collapse into one Design confirmation, and confirming readiness to implement also counts as confirming the design if not done separately. Either confirmation offers **Discuss** first, for questions or pushback before committing.
-
-Once code is written, a short report follows: what changed, how the new code works, why it matches what was decided, what was tested (and what wasn't), and the actual result of running it — not just a claim that it works.
+Once code is written, a short report follows: what changed, how the new code works, why it matches what was decided, what was tested (and what was not), and the actual result of running it.
 
 ## Tuning it to you
 
@@ -235,46 +231,18 @@ Experience level changes how much is explained, not who decides:
 
 | Level | What you get |
 | --- | --- |
-| Beginner | Concepts explained before they're used, small diagrams, narrower reasoning questions. |
+| Beginner | Concepts explained before they are used, small diagrams, narrower reasoning questions. |
 | Intermediate | Less setup, more focus on how pieces interact and trade off against each other. |
 | Advanced | Pressure-testing of constraints, edge cases, and unstated assumptions. |
 
-Reasoning happens first at every level — experience only changes the scaffolding around it. Checkpoint frequency is adjustable separately:
-
-- "Fewer checkpoints, please."
-- "Multiple choice instead of open questions."
-- "Just implement this one."
-- "Pause learning," or run `/cognition-pause`. Resume anytime with `/cognition-learn`; check status in between with `/cognition-status`.
-
-Preferences, progress, and a project map all live in a `.cognition/` folder at the project root (or at the Git repository root if one exists — Cognition locates it from any subdirectory). It survives restarts, `/clear`, and compaction. Add `.cognition/` to `.gitignore` to keep it out of version control; the plugin suggests this during onboarding but will not modify `.gitignore` without asking first.
+Preferences, progress, and a project map all live in a `.vaka/` folder at the project root (or at the Git repository root if one exists). It survives restarts, `/clear`, and compaction. Add `.vaka/` to `.gitignore` to keep it out of version control; the plugin suggests this during onboarding but will not modify `.gitignore` without asking first.
 
 Nothing here phones out: no account, no backend, no telemetry. Saved notes become part of the agent's context the same way any other file would, so your existing data settings for Claude Code or Codex apply unchanged.
 
-`/cognition-reset` restarts a project from scratch. It shows exactly what it's about to touch, asks **Cancel** or **Reset learning**, and on confirmation moves the current profile, progress, and project map into a `backups/` folder before generating fresh ones. Nothing outside `.cognition/` is touched. A reset is not required just to change experience level or preferences — those can be changed directly.
-
-## Sharing with a team
-
-A plugin marketplace entry is just a pointer to a Git location — no public listing is required.
-
-**Private repo.** Push a copy of this repository to a private Git host. Teammates with access run:
-
-```sh
-/plugin marketplace add your-org/cognition
-/plugin install cognition@cognition
-```
-
-No publishing or review step is involved. Codex supports the equivalent command (`codex plugin marketplace add your-org/cognition`); check `codex plugin marketplace --help` for exact flags, since this surface is newer and documented less consistently than Claude Code's.
-
-**Public repo.** Make the repo public. The same commands work for anyone who knows the repo path.
-
-**Official directory listing.** Being discoverable without a direct link requires a separate, optional submission to Anthropic's curated marketplace — not required for private or link-based sharing.
-
-Since `dist/` is committed in the repository, installs through the plugin system are immediate: a `node` runtime is sufficient, and the TypeScript toolchain is not required.
-
 ## Development
 
-See [docs/development.md](docs/development.md) for the test suite, local checks, and the reasoning behind several implementation choices.
+See [docs/development.md](docs/development.md) for the test suite, local checks, and implementation details.
 
 ## License
 
-[MIT](LICENSE) — use, modify, and share, including commercially, as long as the license notice stays with any copies. No warranty.
+[MIT](LICENSE): use, modify, and share, including commercially, as long as the license notice stays with any copies. No warranty.

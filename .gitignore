@@ -1,7 +1,7 @@
 node_modules/
 *.log
 .DS_Store
-.cognition/
+.vaka/
 
 # dist/ is intentionally committed: it's what the hook and skills actually
 # run (see hooks/hooks.json and skills/*/SKILL.md). Anyone who installs this

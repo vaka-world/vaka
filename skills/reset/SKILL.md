@@ -4,7 +4,7 @@ description: Back up this project's learning notes and restart onboarding after 
 disable-model-invocation: true
 ---
 
-# Resetting Cognition's learning notes
+# Resetting Vaka's learning notes
 
 Only run this when explicitly invoked, in the main conversation. It replaces the profile, the progress log, any pending checkpoint, and the saved project map with fresh ones. It does not touch source code, dependencies, Git history, any other project, or the plugin install itself.
 
@@ -16,7 +16,7 @@ Running under Codex instead of Claude Code? Read [codex.md](codex.md) first.
    node "${CLAUDE_PLUGIN_ROOT}/dist/skills/reset/reset.js" --cwd "<absolute project directory>"
    ```
 
-   This reuses the same project-boundary and state-lookup logic as Learn. If it reports there's nothing to reset, say so and point at `/cognition:learn` instead. If it errors, stop and explain the error — don't start improvising your own deletion commands.
+   This reuses the same project-boundary and state-lookup logic as Learn. If it reports there's nothing to reset, say so and point at `/vaka:learn` instead. If it errors, stop and explain the error — don't start improvising your own deletion commands.
 
 2. Tell the user the project and state paths it found, which files would be reset, and that the originals get saved under that state directory's `backups/` folder before anything changes. Ask with AskUserQuestion: header `Reset`, `multiSelect: false`, options **Cancel** (notes stay as they are) and **Reset learning** (back up, then restart onboarding). If the picker isn't available, ask the same thing as plain text, and wait for an actual answer — invoking this command, staying silent, an ambiguous reply, or being granted permission to run a tool are all not a confirmation. Cancel changes nothing at all, including the notes themselves.
 

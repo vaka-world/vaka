@@ -1,11 +1,11 @@
 {
-  "name": "cognition",
+  "name": "vaka",
   "metadata": {
-    "description": "Cognition: your mind is the architect; the agent writes what you've reasoned through."
+    "description": "Vaka: your mind is the architect; the agent writes what you've reasoned through."
   },
   "plugins": [
     {
-      "name": "cognition",
+      "name": "vaka",
       "source": "./",
       "description": "Keeps design reasoning in your hands and hands the agreed design to the agent to implement."
     }

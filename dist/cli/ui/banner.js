@@ -1,15 +1,14 @@
 "use strict";
 /**
- * Terminal entrance card and Seed-of-Life animation, ported from Vaka's CLI
- * (apps/cli/src/ui/banner.ts) — same geometry, palette, and animation timing.
- * Only the name and the copy under the glyph changed.
+ * Terminal entrance card and Seed-of-Life animation: same geometry, palette,
+ * and animation timing as Vaka's original web CLI (apps/cli/src/ui/banner.ts).
  */
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.buildCognitionCard = buildCognitionCard;
-exports.animateCognitionEntrance = animateCognitionEntrance;
+exports.buildVakaCard = buildVakaCard;
+exports.animateVakaEntrance = animateVakaEntrance;
 const node_readline_1 = __importDefault(require("node:readline"));
 const terminal_theme_1 = require("./terminal-theme");
 const BOLD = "\x1b[1m";
@@ -113,7 +112,7 @@ function center(text, width) {
 function padEndSafe(text, width) {
     return text.length >= width ? text : text + " ".repeat(width - text.length);
 }
-function buildCognitionCard(frameIndex, isPulsing, theme, colorEnabled, version) {
+function buildVakaCard(frameIndex, isPulsing, theme, colorEnabled, version) {
     const palette = PALETTES[theme];
     const glyph = SEED_FRAMES[frameIndex] ?? SEED_FRAMES[FINAL_FRAME];
     const ringColor = isPulsing ? palette.text : palette.ring;
@@ -147,16 +146,16 @@ function buildCognitionCard(frameIndex, isPulsing, theme, colorEnabled, version)
     return lines.join("\n");
 }
 function buildMinimalBanner(version) {
-    return `Cognition v${version} — Your mind is the architect.`;
+    return `Vaka v${version} — Your mind is the architect.`;
 }
-async function animateCognitionEntrance(options = {}) {
+async function animateVakaEntrance(options = {}) {
     const stdout = options.stdout ?? process.stdout;
     const env = options.env ?? process.env;
     const version = options.version ?? "0.1.0";
     const theme = (0, terminal_theme_1.detectTerminalTheme)(env);
     const colorEnabled = (0, terminal_theme_1.supportsColor)(stdout, env);
     const interactive = stdout.isTTY === true;
-    const finalCard = buildCognitionCard(FINAL_FRAME, false, theme, colorEnabled, version);
+    const finalCard = buildVakaCard(FINAL_FRAME, false, theme, colorEnabled, version);
     const cardWidth = Math.max(...finalCard.split("\n").map((line) => stripAnsi(line).length));
     const columns = stdout.columns ?? cardWidth;
     // Piped/CI/non-interactive: print once, no cursor tricks, no animation delay.
@@ -174,13 +173,13 @@ async function animateCognitionEntrance(options = {}) {
     node_readline_1.default.clearScreenDown(stdout);
     for (let i = 0; i < SEED_FRAMES.length; i++) {
         node_readline_1.default.cursorTo(stdout, 0, 0);
-        stdout.write(`${buildCognitionCard(i, false, theme, colorEnabled, version)}\n`);
+        stdout.write(`${buildVakaCard(i, false, theme, colorEnabled, version)}\n`);
         await new Promise((resolve) => setTimeout(resolve, 85));
     }
     const pulseRhythm = [true, false, true, false];
     for (const pulse of pulseRhythm) {
         node_readline_1.default.cursorTo(stdout, 0, 0);
-        stdout.write(`${buildCognitionCard(FINAL_FRAME, pulse, theme, colorEnabled, version)}\n`);
+        stdout.write(`${buildVakaCard(FINAL_FRAME, pulse, theme, colorEnabled, version)}\n`);
         await new Promise((resolve) => setTimeout(resolve, pulse ? 130 : 90));
     }
     stdout.write(SHOW_CURSOR);

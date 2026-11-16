@@ -16,7 +16,7 @@ const REGISTRY_DIST_TAGS_URL = "https://registry.npmjs.org/-/package/";
 const CACHE_TTL_MS = 24 * 60 * 60 * 1000;
 const FETCH_TIMEOUT_MS = 1500;
 function defaultCachePath() {
-    return (0, node_path_1.join)((0, node_os_1.homedir)(), ".cognition", "update-check.json");
+    return (0, node_path_1.join)((0, node_os_1.homedir)(), ".vaka", "update-check.json");
 }
 function readCache(cachePath) {
     try {

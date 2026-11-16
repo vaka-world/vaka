@@ -14,7 +14,7 @@ exports.stateDirectory = stateDirectory;
 exports.profileIsActive = profileIsActive;
 const node_fs_1 = require("node:fs");
 const node_path_1 = __importDefault(require("node:path"));
-exports.STATE_DIR_NAME = ".cognition";
+exports.STATE_DIR_NAME = ".vaka";
 /** Find the nearest repository or worktree root (a `.git` directory or file). */
 function gitRoot(cwd) {
     let dir = cwd;
@@ -29,7 +29,7 @@ function gitRoot(cwd) {
     }
 }
 /**
- * Find the nearest `.cognition` notes directory without crossing a Git
+ * Find the nearest `.vaka` notes directory without crossing a Git
  * project boundary. Without Git, only `cwd` itself is checked: searching
  * parents could otherwise adopt notes from an unrelated ancestor folder.
  *

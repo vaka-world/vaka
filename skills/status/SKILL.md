@@ -4,9 +4,9 @@ description: Show this project's current learning-mode status — mode, onboardi
 disable-model-invocation: true
 ---
 
-# Cognition: Status
+# Vaka: Status
 
-A quick, read-only check, not a resume. Unlike `/cognition:learn`, this does not read behavior.md, continue onboarding, or ask the learner anything — it only reports what's already saved.
+A quick, read-only check, not a resume. Unlike `/vaka:learn`, this does not read behavior.md, continue onboarding, or ask the learner anything — it only reports what's already saved.
 
 Run this in the main conversation:
 
@@ -20,13 +20,13 @@ If you are running in Codex rather than Claude Code, first read [codex.md](codex
 
 ## Reporting the result
 
-On `no_notes`, say plainly that Cognition hasn't been set up for this project yet, and point at `/cognition:learn`. Don't guess at settings that were never saved.
+On `no_notes`, say plainly that Vaka hasn't been set up for this project yet, and point at `/vaka:learn`. Don't guess at settings that were never saved.
 
 On `found`, give a short plain-language summary — not a raw field dump:
 
 - Whether learning is active or paused.
 - Whether onboarding is complete, and if not, that something's still unanswered.
 - The current checkpoint frequency, question style, and implementation preference, if saved.
-- If `pendingDecision` isn't null, say clearly that something is still awaiting a reply, and summarize what it is from that field. Don't try to resolve it here — acting on it still goes through the ordinary conversation or a full `/cognition:learn`, not this command.
+- If `pendingDecision` isn't null, say clearly that something is still awaiting a reply, and summarize what it is from that field. Don't try to resolve it here — acting on it still goes through the ordinary conversation or a full `/vaka:learn`, not this command.
 
 Any field that's `null` simply hasn't been recorded; say so rather than inventing a value. This command never writes anything, regardless of what it finds.

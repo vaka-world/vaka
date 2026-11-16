@@ -1,7 +1,6 @@
 /**
- * Terminal entrance card and Seed-of-Life animation, ported from Vaka's CLI
- * (apps/cli/src/ui/banner.ts) — same geometry, palette, and animation timing.
- * Only the name and the copy under the glyph changed.
+ * Terminal entrance card and Seed-of-Life animation: same geometry, palette,
+ * and animation timing as Vaka's original web CLI (apps/cli/src/ui/banner.ts).
  */
 
 import readline from "node:readline";
@@ -118,7 +117,7 @@ function padEndSafe(text: string, width: number): string {
   return text.length >= width ? text : text + " ".repeat(width - text.length);
 }
 
-export function buildCognitionCard(
+export function buildVakaCard(
   frameIndex: number,
   isPulsing: boolean,
   theme: TerminalTheme,
@@ -172,7 +171,7 @@ export function buildCognitionCard(
 }
 
 function buildMinimalBanner(version: string): string {
-  return `Cognition v${version} — Your mind is the architect.`;
+  return `Vaka v${version} — Your mind is the architect.`;
 }
 
 export interface AnimateOptions {
@@ -181,7 +180,7 @@ export interface AnimateOptions {
   version?: string;
 }
 
-export async function animateCognitionEntrance(options: AnimateOptions = {}): Promise<void> {
+export async function animateVakaEntrance(options: AnimateOptions = {}): Promise<void> {
   const stdout = options.stdout ?? process.stdout;
   const env = options.env ?? process.env;
   const version = options.version ?? "0.1.0";
@@ -190,7 +189,7 @@ export async function animateCognitionEntrance(options: AnimateOptions = {}): Pr
   const colorEnabled = supportsColor(stdout, env);
   const interactive = stdout.isTTY === true;
 
-  const finalCard = buildCognitionCard(FINAL_FRAME, false, theme, colorEnabled, version);
+  const finalCard = buildVakaCard(FINAL_FRAME, false, theme, colorEnabled, version);
   const cardWidth = Math.max(...finalCard.split("\n").map((line) => stripAnsi(line).length));
   const columns = stdout.columns ?? cardWidth;
 
@@ -212,14 +211,14 @@ export async function animateCognitionEntrance(options: AnimateOptions = {}): Pr
 
   for (let i = 0; i < SEED_FRAMES.length; i++) {
     readline.cursorTo(stdout, 0, 0);
-    stdout.write(`${buildCognitionCard(i, false, theme, colorEnabled, version)}\n`);
+    stdout.write(`${buildVakaCard(i, false, theme, colorEnabled, version)}\n`);
     await new Promise((resolve) => setTimeout(resolve, 85));
   }
 
   const pulseRhythm = [true, false, true, false];
   for (const pulse of pulseRhythm) {
     readline.cursorTo(stdout, 0, 0);
-    stdout.write(`${buildCognitionCard(FINAL_FRAME, pulse, theme, colorEnabled, version)}\n`);
+    stdout.write(`${buildVakaCard(FINAL_FRAME, pulse, theme, colorEnabled, version)}\n`);
     await new Promise((resolve) => setTimeout(resolve, pulse ? 130 : 90));
   }
 

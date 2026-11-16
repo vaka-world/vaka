@@ -8,14 +8,14 @@ import { initializeProject } from "../src/cli/commands/init";
 const packageRoot = path.resolve(__dirname, "..");
 
 function tempProject(): { root: string; project: string } {
-  const root = mkdtempSync(path.join(tmpdir(), "cognition-init-"));
+  const root = mkdtempSync(path.join(tmpdir(), "vaka-init-"));
   const project = path.join(root, "project");
   mkdirSync(project);
   return { root, project };
 }
 
 function readVendored(project: string, tree: ".claude" | ".agents", skill: string, file: string): string {
-  return readFileSync(path.join(project, tree, "skills", `cognition-${skill}`, file), "utf8");
+  return readFileSync(path.join(project, tree, "skills", `vaka-${skill}`, file), "utf8");
 }
 
 test("a bare project with no markers vendors both skill trees but skips the hook", async () => {
@@ -24,8 +24,8 @@ test("a bare project with no markers vendors both skill trees but skips the hook
     const result = await initializeProject(project, { packageRoot });
     assert.deepEqual(result.integrations, []);
     assert.equal(result.hook, "not-applicable");
-    assert.ok(result.created.includes(path.join(".claude/skills/cognition-learn", "SKILL.md")));
-    assert.ok(result.created.includes(path.join(".agents/skills/cognition-pause", "codex.md")));
+    assert.ok(result.created.includes(path.join(".claude/skills/vaka-learn", "SKILL.md")));
+    assert.ok(result.created.includes(path.join(".agents/skills/vaka-pause", "codex.md")));
     assert.equal(result.created.length, 22); // 4 skills x 2 trees; learn has 5 files, the others 2 each
   } finally {
     rmSync(root, { recursive: true, force: true });
@@ -119,8 +119,8 @@ test("vendored skill guides carry no plugin-only references", async () => {
       for (const skill of ["learn", "pause", "reset", "status"]) {
         const skillMd = readVendored(project, tree, skill, "SKILL.md");
         assert.doesNotMatch(skillMd, /CLAUDE_PLUGIN_ROOT/);
-        assert.doesNotMatch(skillMd, /\/cognition:/);
-        assert.match(skillMd, new RegExp(`name: cognition-${skill}`));
+        assert.doesNotMatch(skillMd, /\/vaka:/);
+        assert.match(skillMd, new RegExp(`name: vaka-${skill}`));
       }
       const pauseCodex = readVendored(project, tree, "pause", "codex.md");
       assert.doesNotMatch(pauseCodex, /CLAUDE_PLUGIN_ROOT/);
@@ -136,17 +136,17 @@ test("reset's pointer back to the Learn guide is an absolute path in its own tre
     await initializeProject(project, { packageRoot });
 
     const claudeReset = readVendored(project, ".claude", "reset", "SKILL.md");
-    assert.ok(claudeReset.includes(path.join(project, ".claude/skills/cognition-learn/SKILL.md")));
+    assert.ok(claudeReset.includes(path.join(project, ".claude/skills/vaka-learn/SKILL.md")));
 
     const agentsReset = readVendored(project, ".agents", "reset", "SKILL.md");
-    assert.ok(agentsReset.includes(path.join(project, ".agents/skills/cognition-learn/SKILL.md")));
+    assert.ok(agentsReset.includes(path.join(project, ".agents/skills/vaka-learn/SKILL.md")));
   } finally {
     rmSync(root, { recursive: true, force: true });
   }
 });
 
 test("rejects a project path that isn't a directory", async () => {
-  const root = mkdtempSync(path.join(tmpdir(), "cognition-init-"));
+  const root = mkdtempSync(path.join(tmpdir(), "vaka-init-"));
   try {
     await assert.rejects(() => initializeProject(path.join(root, "nope"), { packageRoot }));
   } finally {

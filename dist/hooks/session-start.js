@@ -56,7 +56,7 @@ function restore(payload) {
     // index here. That keeps this output's size independent of how much
     // learning history has piled up.
     const context = [
-        "This project has Cognition's learning mode on. Before you respond or ",
+        "This project has Vaka's learning mode on. Before you respond or ",
         "write anything, Read the Learn guide below and the behavior instructions ",
         "it links to:\n",
         `${node_path_1.default.join(exports.PLUGIN_ROOT, "skills", "learn", "SKILL.md")}\n\n`,

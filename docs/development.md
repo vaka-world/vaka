@@ -1,6 +1,6 @@
 # Development
 
-Cognition uses Claude Code / Codex skills, Markdown instructions, one read-only
+Vaka uses Claude Code / Codex skills, Markdown instructions, one read-only
 SessionStart hook, and three small commands — `status`, `pause`, and `reset` —
 all written in TypeScript and compiled to plain Node.js. There are no runtime
 npm dependencies; `typescript`, `@types/node`, and `tsx` are devDependencies
@@ -51,10 +51,10 @@ backup/write failures, and restoring incomplete onboarding after reset.
 ## Conversation smoke tests
 
 Use an authenticated Claude Code session and temporary copies of projects.
-Launch with `claude --plugin-dir /absolute/path/to/cognition` after running
+Launch with `claude --plugin-dir /absolute/path/to/vaka` after running
 `npm run build`.
 
-1. **Fresh project:** Run `/cognition:learn`. Choose a new project, describe
+1. **Fresh project:** Run `/vaka:learn`. Choose a new project, describe
    a small CLI, and accept preference defaults. Check that all three state files
    are created, the map separates proposed from implemented components, and no
    understanding is marked demonstrated without evidence. Choice questions must
@@ -86,14 +86,14 @@ Launch with `claude --plugin-dir /absolute/path/to/cognition` after running
    the map, and mastered concepts survive without repeated onboarding. Pause
    learning, restart, and confirm it stays paused; invoke Learn to resume.
 6. **Reset:** In a temporary project with saved learning notes, invoke
-   `/cognition:reset`. Confirm it shows the absolute project and state paths and
+   `/vaka:reset`. Confirm it shows the absolute project and state paths and
    asks Cancel / Reset learning. Cancel must leave all files unchanged. Invoke
    again and confirm: original notes must exist in the reported backup, the
    active profile must be incomplete, and onboarding must ask fresh questions
    rather than reuse old preferences. Repeat after restart. If notes change
    during confirmation, the agent must preview and confirm again.
 
-Do not commit `.cognition/` or test transcripts. The plugin recommends an
+Do not commit `.vaka/` or test transcripts. The plugin recommends an
 ignore rule during onboarding, but changes `.gitignore` only after telling the
 user and receiving their instruction to make the edit.
 
@@ -102,7 +102,7 @@ user and receiving their instruction to make the edit.
 - [Plugin creation](https://code.claude.com/docs/en/plugins/create): standard
   component directories and `--plugin-dir` for local loading.
 - [Skills](https://code.claude.com/docs/en/skills): the command is
-  `/cognition:learn`. Explicit invocation starts onboarding; the hook restores
+  `/vaka:learn`. Explicit invocation starts onboarding; the hook restores
   behavior in later sessions only where a learner profile already exists.
 - [Hooks](https://code.claude.com/docs/en/hooks): `SessionStart` sources include
   `startup`, `resume`, `clear`, `compact`, and `fork`. The hook emits a small
