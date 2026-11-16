@@ -1,0 +1,20 @@
+{
+  "name": "cognition",
+  "version": "0.1.0",
+  "description": "Your mind is the architect. Work through design, data flow, and failure modes with Codex before any code gets written.",
+  "license": "MIT",
+  "keywords": ["learning", "architecture", "engineering", "pair-programming"],
+  "skills": "./skills/",
+  "hooks": {},
+  "interface": {
+    "displayName": "Cognition",
+    "shortDescription": "Reason through the design; Codex writes what you decided",
+    "longDescription": "Cognition keeps the reasoning in your hands. Codex waits for your approach, pushes back on weak spots, and explains anything unfamiliar along the way. Once you've settled on a design and said so, it implements exactly that and walks you through the result.",
+    "category": "Developer Tools",
+    "capabilities": ["Interactive", "Read", "Write"],
+    "composerIcon": "./assets/cognition-logo.jpeg",
+    "logo": "./assets/cognition-logo.jpeg",
+    "defaultPrompt": ["$cognition:learn"],
+    "screenshots": []
+  }
+}

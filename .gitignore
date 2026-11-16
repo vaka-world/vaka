@@ -1,0 +1,10 @@
+node_modules/
+*.log
+.DS_Store
+.cognition/
+
+# dist/ is intentionally committed: it's what the hook and skills actually
+# run (see hooks/hooks.json and skills/*/SKILL.md). Anyone who installs this
+# plugin — via --plugin-dir or a marketplace — needs working code immediately,
+# without running a Node/TypeScript build first. Run `npm run build` after
+# editing src/ and commit the updated dist/ alongside it.

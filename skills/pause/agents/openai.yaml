@@ -1,0 +1,5 @@
+interface:
+  display_name: "Cognition Pause"
+  short_description: "Pause learning mode for this project"
+policy:
+  allow_implicit_invocation: false

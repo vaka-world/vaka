@@ -1,0 +1,32 @@
+{
+  "name": "@craiggazimbi/cognition",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Your mind is the architect. A Claude Code / Codex plugin that makes you reason through design, data flow, and failure modes before the agent writes a line of code.",
+  "license": "MIT",
+  "keywords": ["learning", "architecture", "engineering", "pair-programming"],
+  "engines": {
+    "node": ">=22.6.0"
+  },
+  "bin": {
+    "cognition": "dist/cli/index.js"
+  },
+  "files": ["dist", "skills", "LICENSE"],
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "postbuild": "chmod +x dist/cli/index.js",
+    "clean": "rm -rf dist",
+    "prepublishOnly": "npm run build",
+    "test": "tsx --test tests/**/*.test.ts",
+    "test:dist": "npm run build && node --test dist-tests",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.1",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2"
+  }
+}

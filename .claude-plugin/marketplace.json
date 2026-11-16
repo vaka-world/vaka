@@ -1,0 +1,13 @@
+{
+  "name": "cognition",
+  "metadata": {
+    "description": "Cognition: your mind is the architect; the agent writes what you've reasoned through."
+  },
+  "plugins": [
+    {
+      "name": "cognition",
+      "source": "./",
+      "description": "Keeps design reasoning in your hands and hands the agreed design to the agent to implement."
+    }
+  ]
+}
