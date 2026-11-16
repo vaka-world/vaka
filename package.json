@@ -1,9 +1,12 @@
 {
   "name": "@craiggazimbi/cognition",
-  "version": "0.1.0",
-  "private": true,
+  "version": "0.1.1",
   "description": "Your mind is the architect. A Claude Code / Codex plugin that makes you reason through design, data flow, and failure modes before the agent writes a line of code.",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/therealcraiggazimbi/cognition.git"
+  },
   "keywords": ["learning", "architecture", "engineering", "pair-programming"],
   "engines": {
     "node": ">=22.6.0"

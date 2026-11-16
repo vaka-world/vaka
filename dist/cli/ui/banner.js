@@ -119,9 +119,12 @@ function buildCognitionCard(frameIndex, isPulsing, theme, colorEnabled, version)
     const ringColor = isPulsing ? palette.text : palette.ring;
     const coreColor = isPulsing ? palette.ring : palette.core;
     const title = "YOUR MIND IS THE ARCHITECT";
-    const subtitle = "Checkpoints before the agent writes code.";
+    const subtitleLines = [
+        "Reason through design, data flow, and failure modes",
+        "before a single line of code is written.",
+    ];
     const footer = `v${version} · Claude Code + Codex`;
-    const innerWidth = Math.max(...glyph.map((line) => line.length), title.length, subtitle.length, footer.length);
+    const innerWidth = Math.max(...glyph.map((line) => line.length), title.length, ...subtitleLines.map((line) => line.length), footer.length);
     const colorWrap = (code, text, bold = false) => colorEnabled ? `${bold ? BOLD : ""}${code}${text}${RESET}` : text;
     const border = (char) => colorWrap(palette.border, char);
     const contentRow = (text) => `${border("│")} ${text} ${border("│")}`;
@@ -136,7 +139,7 @@ function buildCognitionCard(frameIndex, isPulsing, theme, colorEnabled, version)
         glyphRow(glyph[4], ringColor),
         contentRow(" ".repeat(innerWidth)),
         contentRow(colorWrap(palette.text, center(title, innerWidth), true)),
-        contentRow(colorWrap(palette.muted, center(subtitle, innerWidth))),
+        ...subtitleLines.map((line) => contentRow(colorWrap(palette.muted, center(line, innerWidth)))),
         contentRow(" ".repeat(innerWidth)),
         contentRow(colorWrap(palette.muted, center(footer, innerWidth))),
         `${border("└")}${border("─".repeat(innerWidth + 2))}${border("┘")}`,

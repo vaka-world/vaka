@@ -131,13 +131,16 @@ export function buildCognitionCard(
   const coreColor = isPulsing ? palette.ring : palette.core;
 
   const title = "YOUR MIND IS THE ARCHITECT";
-  const subtitle = "Checkpoints before the agent writes code.";
+  const subtitleLines = [
+    "Reason through design, data flow, and failure modes",
+    "before a single line of code is written.",
+  ];
   const footer = `v${version} · Claude Code + Codex`;
 
   const innerWidth = Math.max(
     ...glyph.map((line) => line.length),
     title.length,
-    subtitle.length,
+    ...subtitleLines.map((line) => line.length),
     footer.length
   );
 
@@ -159,7 +162,7 @@ export function buildCognitionCard(
     glyphRow(glyph[4]!, ringColor),
     contentRow(" ".repeat(innerWidth)),
     contentRow(colorWrap(palette.text, center(title, innerWidth), true)),
-    contentRow(colorWrap(palette.muted, center(subtitle, innerWidth))),
+    ...subtitleLines.map((line) => contentRow(colorWrap(palette.muted, center(line, innerWidth)))),
     contentRow(" ".repeat(innerWidth)),
     contentRow(colorWrap(palette.muted, center(footer, innerWidth))),
     `${border("└")}${border("─".repeat(innerWidth + 2))}${border("┘")}`,
