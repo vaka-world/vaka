@@ -1,18 +1,27 @@
 {
   "name": "@vaka.world/cli",
-  "version": "0.1.1",
+  "version": "0.4.0",
   "description": "Your mind is the architect. A Claude Code / Codex plugin that makes you reason through design, data flow, and failure modes before the agent writes a line of code.",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/vaka-world/vaka.git"
+    "url": "git+https://github.com/vaka-world/vaka.git"
   },
   "keywords": [
-    "learning",
-    "architecture",
-    "engineering",
-    "pair-programming"
-  ],
+      "claude-code",
+      "codex",
+      "ai-agents",
+      "coding-assistant",
+      "architecture",
+      "software-design",
+      "reasoning",
+      "checkpoints",
+      "vibe-coding",
+      "pair-programming",
+      "engineering",
+      "learning",
+      "cli"
+    ],
   "engines": {
     "node": ">=22.6.0"
   },
