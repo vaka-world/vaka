@@ -32,15 +32,15 @@
     "postbuild": "chmod +x dist/cli/index.js",
     "clean": "rm -rf dist",
     "prepublishOnly": "npm run build",
-    "test": "tsx --test tests/**/*.test.ts",
+    "test": "tsx --test --test-reporter=./test-table-reporter.mjs --test-reporter-destination=stdout tests/**/*.test.ts",
     "test:dist": "npm run build && node --test dist-tests",
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "prepare": "husky"
   },
   "devDependencies": {
-    "@types/node": "^22.10.1",
-    "husky": "^9.1.7",
-    "tsx": "^4.19.2",
-    "typescript": "^5.7.2"
+    "@types/node": "22.20.5",
+    "husky": "9.1.7",
+    "tsx": "4.23.15",
+    "typescript": "5.9.3"
   }
 }
