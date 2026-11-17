@@ -1,4 +1,4 @@
-<img src="assets/vaka.png" alt="Vaka: your mind is the architect" width="420" height="420">
+<img src="https://cdn.jsdelivr.net/npm/@vaka.world/cli/assets/vaka.png" alt="Vaka: your mind is the architect" width="420" height="420">
 
 # Vaka
 
